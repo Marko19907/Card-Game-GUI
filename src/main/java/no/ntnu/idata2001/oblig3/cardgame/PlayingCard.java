@@ -34,7 +34,7 @@ public class PlayingCard
      */
     public String getAsString()
     {
-        return String.format("%s%s", suit, face);
+        return String.format("%s%s", this.getSuit(), this.getFace());
     }
 
     /**
@@ -43,7 +43,7 @@ public class PlayingCard
      */
     public char getSuit()
     {
-        return suit;
+        return this.suit;
     }
 
     /**
@@ -52,6 +52,6 @@ public class PlayingCard
      */
     public int getFace()
     {
-        return face;
+        return this.face;
     }
 }
