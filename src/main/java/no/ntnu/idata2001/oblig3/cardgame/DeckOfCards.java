@@ -103,7 +103,7 @@ public class DeckOfCards
      * Returns the size of the deck
      * @return the size of the deck as an int
      */
-    private int getDeckSize()
+    public int getDeckSize()
     {
         return this.deck.size();
     }
