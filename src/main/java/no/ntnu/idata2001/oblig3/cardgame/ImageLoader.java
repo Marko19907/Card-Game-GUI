@@ -55,6 +55,7 @@ public class ImageLoader
                 ImageView imageView = new ImageView(image);
                 imageView.setFitHeight(DEFAULT_IMAGE_HEIGHT);
                 imageView.setFitWidth(DEFAULT_IMAGE_WIDTH);
+                imageView.setPreserveRatio(true);
 
                 this.images.put(cardName, imageView);
             }

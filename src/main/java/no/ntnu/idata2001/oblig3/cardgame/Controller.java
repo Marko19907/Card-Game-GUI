@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.TilePane;
 
 import java.util.List;
 
@@ -17,19 +18,13 @@ import java.util.List;
  */
 public class Controller
 {
-    private static final int MAX_HORIZONTAL_ROWS = 3;
     private final PlayingHand hand;
     private final ImageLoader imageLoader;
-    private int horizontalPos;
-    private int verticalPos;
 
     public Controller()
     {
         this.hand = new PlayingHand();
         this.imageLoader = new ImageLoader();
-
-        this.horizontalPos = 0;
-        this.verticalPos = 0;
     }
 
     /**
@@ -51,7 +46,7 @@ public class Controller
         }
     }
 
-    public void checkHand(GridPane gridPane)
+    public void checkHand(TilePane tilePane)
     {
         List<PlayingCard> activeCards = this.hand.getActiveCards();
 
@@ -59,12 +54,7 @@ public class Controller
             ImageView imageView = this.imageLoader.getCardImage(card.getAsString());
 
             if (imageView != null) {
-                if (this.horizontalPos >= MAX_HORIZONTAL_ROWS) {
-                    this.horizontalPos = 0;
-                    this.verticalPos++;
-                }
-                gridPane.add(imageView, this.horizontalPos, this.verticalPos);
-                this.horizontalPos++;
+                tilePane.getChildren().add(imageView);
             }
         }
     }

@@ -9,9 +9,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -22,11 +22,12 @@ import javafx.stage.Stage;
 public class CardGameGUI extends Application
 {
     private final Controller controller;
-    private GridPane gridPane;
+    private final TilePane tilePane;
 
     public CardGameGUI()
     {
         this.controller = new Controller();
+        this.tilePane = new TilePane();
     }
 
     /**
@@ -61,13 +62,13 @@ public class CardGameGUI extends Application
     private ScrollPane setupCenter()
     {
         ScrollPane scrollPane = new ScrollPane();
-        this.gridPane = new GridPane();
-        this.gridPane.setPadding(new Insets(5, 5, 5, 5));
-        this.gridPane.setStyle("-fx-background-color:#e7e7e7; -fx-opacity:1;");
-        this.gridPane.setVgap(5);
-        this.gridPane.setHgap(5);
 
-        scrollPane.setContent(this.gridPane);
+        this.tilePane.setPadding(new Insets(5, 5, 5, 5));
+        this.tilePane.setStyle("-fx-background-color:#e7e7e7; -fx-opacity:1;");
+        this.tilePane.setVgap(5);
+        this.tilePane.setHgap(5);
+
+        scrollPane.setContent(this.tilePane);
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
 
@@ -84,9 +85,13 @@ public class CardGameGUI extends Application
         vBox.setPadding(new Insets(5, 5, 5, 5));
 
         HBox hBoxTop = this.setupUpperButtonRow();
+
+        Region verticalSpacer = new Region();
+        verticalSpacer.setMinHeight(4.5);
+
         HBox hBoxBottom = this.setupLowerButtonRow();
 
-        vBox.getChildren().addAll(hBoxTop, hBoxBottom);
+        vBox.getChildren().addAll(hBoxTop, verticalSpacer, hBoxBottom);
         return vBox;
     }
 
@@ -110,7 +115,7 @@ public class CardGameGUI extends Application
         spacer.setPrefHeight(15);
 
         Button checkHandButton = new Button("Check hand");
-        checkHandButton.setOnAction(e -> this.controller.checkHand(this.gridPane));
+        checkHandButton.setOnAction(e -> this.controller.checkHand(this.tilePane));
         checkHandButton.setPrefWidth(150);
         checkHandButton.setPrefHeight(30);
 
