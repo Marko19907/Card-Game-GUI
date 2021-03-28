@@ -46,18 +46,111 @@ public class Controller
         }
     }
 
-    public void checkHand(TilePane tilePane)
+    /**
+     * Responsible for responding to the check hand button
+     * @param tilePane The tile pane to set the card images to, can not be null
+     * @param sumOfTheFacesTextField The text field to set the sum of faces text to, can not be null
+     * @param cardOfHeartsTextField The text field to set the cards of hearts text to, can not be null
+     * @param queenOfSpadesTextField The text field to set the queen of spades text to, can not be null
+     * @param flushTextField The text field to set the cards flush text to, can not be null
+     */
+    public void checkHand(TilePane tilePane, TextField sumOfTheFacesTextField, TextField cardOfHeartsTextField,
+                          TextField queenOfSpadesTextField, TextField flushTextField)
     {
-        List<PlayingCard> activeCards = this.hand.getActiveCards();
+        this.setCardImagesToTilePane(tilePane);
 
-        for (PlayingCard card : activeCards) {
-            ImageView imageView = this.imageLoader.getCardImage(card.getAsString());
+        this.checkSumOfFaces(sumOfTheFacesTextField);
+        this.checkCardsOfHearts(cardOfHeartsTextField);
+        this.checkQueenOfSpadesPresence(queenOfSpadesTextField);
+        this.checkFlush(flushTextField);
+    }
 
-            if (imageView != null) {
-                tilePane.getChildren().add(imageView);
+    /**
+     * Sets the card images to the provided TilePane
+     * @param tilePane The TilePane to set the images to, can not be null
+     */
+    private void setCardImagesToTilePane(TilePane tilePane)
+    {
+        if (tilePane != null) {
+            List<PlayingCard> activeCards = this.hand.getActiveCards();
+
+            for (PlayingCard card : activeCards) {
+                ImageView imageView = this.imageLoader.getCardImage(card.getAsString());
+
+                if (imageView != null) {
+                    tilePane.getChildren().add(imageView);
+                }
             }
         }
     }
+
+    /**
+     * Sets the text of the provided cardOfHeartsText text field
+     * @param textField The text field to set the text to,
+     *                  can not be null
+     */
+    private void checkCardsOfHearts(TextField textField)
+    {
+        String cardsOfHeartsText = this.hand.getCardsOfHeartsString();
+
+        if (cardsOfHeartsText != null && textField != null) {
+            if (!cardsOfHeartsText.isBlank()) {
+                textField.setText(cardsOfHeartsText);
+            }
+        }
+    }
+
+    /**
+     * Sets the text of the provided sumOfTheFacesTextField text field
+     * @param sumOfTheFacesTextField The text field to set the text to,
+     *                          can not be null
+     */
+    private void checkSumOfFaces(TextField sumOfTheFacesTextField)
+    {
+        if (sumOfTheFacesTextField != null) {
+            sumOfTheFacesTextField.setText("" + this.hand.getUsedCardsValue());
+        }
+    }
+
+    /**
+     * Sets the text of the provided queenOfSpadesTextField text field
+     * @param queenOfSpadesTextField The text field to set the text to,
+     *                               can not be null
+     */
+    private void checkQueenOfSpadesPresence(TextField queenOfSpadesTextField)
+    {
+        if (queenOfSpadesTextField != null) {
+            boolean cardPresent = this.hand.checkQueenOfSpadesPresence();
+            if (cardPresent) {
+                queenOfSpadesTextField.setText("Yes");
+            }
+            else {
+                queenOfSpadesTextField.setText("No");
+            }
+        }
+    }
+
+    /**
+     * Sets the text of the provided flushTextField text field
+     * @param flushTextField The text field to set the text to,
+     *                               can not be null
+     */
+    private void checkFlush(TextField flushTextField)
+    {
+        if (flushTextField != null) {
+            boolean flushPresent = this.hand.checkFlush();
+            if (flushPresent) {
+                flushTextField.setText("Yes");
+            }
+            else {
+                flushTextField.setText("No");
+            }
+        }
+    }
+
+    // -----------------------------------------------------------
+    //    DIALOGS
+    // -----------------------------------------------------------
 
     /**
      * Shows the "ChooseNumberOfCardsDialog" and returns the number input as an int
@@ -133,11 +226,12 @@ public class Controller
     private void showNotEnoughCardsLeftDialog()
     {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeaderText("Not enough cards");
-        alert.setContentText("The number of cards you requested is bigger than " +
-                "the number of cards available in the deck" + "\n" + "\n" +
-                "Number of cards left in the deck: " + this.hand.getNumberOfCardsLeft());
+        alert.setTitle("Not enough cards");
+        alert.setHeaderText("The number of cards you requested is bigger than " + "\n" +
+                "the number of cards available in the deck");
+        alert.setContentText("Number of cards left in the deck: " +
+                this.hand.getNumberOfCardsLeft() + "\n" + "\n" +
+                "No cards were handed out . . .");
 
         alert.showAndWait();
     }

@@ -1,8 +1,11 @@
 package no.ntnu.idata2001.oblig3.cardgame;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class PlayingHand
 {
@@ -53,16 +56,69 @@ public class PlayingHand
     public List<PlayingCard> getActiveCards()
     {
         List<PlayingCard> activeCards = new ArrayList<>(this.playingCards.values());
+        // The list is made with values from a HashMap and therefore is not in a random order
+        //TODO: Move the player hand class to ArrayList(s)
+        Collections.shuffle(activeCards);
+
         this.cleanActiveCards();
 
         return activeCards;
     }
 
     /**
+     * Returns the value of used cards
+     * @return The value of used cards as an int or
+     * 0 if used cards do not contain any cards
+     */
+    public int getUsedCardsValue()
+    {
+        return this.usedCards.values().stream()
+                .mapToInt(PlayingCard::getFace)
+                .sum();
+    }
+
+    /**
+     * Returns a String contacting all cards of hearts
+     * @return a single String contacting all cards of hearts or
+     * blank if used cards do not contain any cards of hearts
+     */
+    public String getCardsOfHeartsString()
+    {
+        return this.usedCards.values().stream()
+                .filter(card -> card.getAsString().contains("H"))
+                .map(PlayingCard::getAsString)
+                .collect(Collectors.joining(", "));
+    }
+
+    /**
+     * Returns true if the Queen of spades card is present in used cards
+     * @return True if the Queen of spades card is present in used cards, false otherwise
+     */
+    public boolean checkQueenOfSpadesPresence()
+    {
+        return this.usedCards.values().stream()
+                .anyMatch(card -> card.getAsString().equals("S12"));
+    }
+
+    /**
+     * Returns true if used cards contain a flush
+     * A flush contains five or more cards all of the same suit
+     * @return true if used cards contain a flush, false otherwise
+     */
+    public boolean checkFlush()
+    {
+        return this.usedCards.values().stream()
+                .map(PlayingCard::getSuit)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .values().stream()
+                .anyMatch(card -> card >= 5);
+    }
+
+    /**
      * Moves all cards from the active deck to the used deck and
      * cleans the active cards list
      */
-    public void cleanActiveCards()
+    private void cleanActiveCards()
     {
         for (PlayingCard card : this.playingCards.values()) {
             if (!this.usedCards.containsKey(card.getAsString())) {

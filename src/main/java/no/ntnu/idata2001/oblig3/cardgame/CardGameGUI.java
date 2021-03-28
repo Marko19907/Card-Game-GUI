@@ -23,11 +23,20 @@ public class CardGameGUI extends Application
 {
     private final Controller controller;
     private final TilePane tilePane;
+    private final TextField sumOfFacesTextField;
+    private final TextField cardOfHeartsTextField;
+    private final TextField queenOfSpadesTextField;
+    private final TextField flushTextField;
 
     public CardGameGUI()
     {
         this.controller = new Controller();
         this.tilePane = new TilePane();
+
+        this.sumOfFacesTextField = new TextField("---");
+        this.cardOfHeartsTextField = new TextField("No Hearts");
+        this.queenOfSpadesTextField = new TextField("---");
+        this.flushTextField = new TextField("---");
     }
 
     /**
@@ -53,6 +62,8 @@ public class CardGameGUI extends Application
         Scene scene = new Scene(root, 600, 400, Color.WHITE);
         stage.setScene(scene);
         stage.show();
+
+        root.requestFocus();
     }
 
     /**
@@ -115,7 +126,8 @@ public class CardGameGUI extends Application
         spacer.setPrefHeight(15);
 
         Button checkHandButton = new Button("Check hand");
-        checkHandButton.setOnAction(e -> this.controller.checkHand(this.tilePane));
+        checkHandButton.setOnAction(e -> this.controller.checkHand(this.tilePane, this.sumOfFacesTextField,
+                this.cardOfHeartsTextField, this.queenOfSpadesTextField, this.flushTextField));
         checkHandButton.setPrefWidth(150);
         checkHandButton.setPrefHeight(30);
 
@@ -144,19 +156,26 @@ public class CardGameGUI extends Application
 
         Label sumLabel = new Label("Sum of the faces: ");
 
-        TextField sumOfTheFacesText = new TextField("Sum of the faces test");
-        sumOfTheFacesText.setEditable(false);
-        sumOfTheFacesText.setDisable(false);
+        this.sumOfFacesTextField.setEditable(false);
+        this.sumOfFacesTextField.setDisable(false);
+        this.sumOfFacesTextField.setPrefWidth(35);
+        this.sumOfFacesTextField.setMinWidth(35);
+        this.sumOfFacesTextField.setAlignment(Pos.CENTER);
 
 
         Label heartsCardsLabel = new Label("Cards of hearts: ");
 
-        TextField cardOfHeartsText = new TextField("No Hearts");
-        cardOfHeartsText.setEditable(false);
-        cardOfHeartsText.setDisable(false);
+        this.cardOfHeartsTextField.setEditable(false);
+        this.cardOfHeartsTextField.setDisable(false);
+        this.cardOfHeartsTextField.setAlignment(Pos.CENTER);
+        this.cardOfHeartsTextField.setMaxWidth(310);
 
-        buttonBox.getChildren().addAll(edgeSpacer, sumLabel, sumOfTheFacesText,
-                spacer, heartsCardsLabel, cardOfHeartsText);
+        //this.cardOfHeartsTextField.setStyle("-fx-font-family: 'monospace';");
+        this.cardOfHeartsTextField.prefColumnCountProperty()
+                 .bind(this.cardOfHeartsTextField.textProperty().length());
+
+        buttonBox.getChildren().addAll(edgeSpacer, sumLabel, this.sumOfFacesTextField,
+                spacer, heartsCardsLabel, this.cardOfHeartsTextField);
         return buttonBox;
     }
 
@@ -179,21 +198,23 @@ public class CardGameGUI extends Application
 
         Label flushLabel = new Label("Flush ");
 
-        TextField flushText = new TextField("Yes/No");
-        flushText.setEditable(false);
-        flushText.setDisable(false);
-        flushText.setMaxWidth(60);
+        this.flushTextField.setEditable(false);
+        this.flushTextField.setDisable(false);
+        this.flushTextField.setPrefWidth(35);
+        this.flushTextField.setMinWidth(35);
+        this.flushTextField.setAlignment(Pos.CENTER);
 
 
         Label queenOfSpadesLabel = new Label("Queen of spades: ");
 
-        TextField queenOfSpadesText = new TextField("Yes/No");
-        queenOfSpadesText.setEditable(false);
-        queenOfSpadesText.setDisable(false);
-        queenOfSpadesText.setMaxWidth(60);
+        this.queenOfSpadesTextField.setEditable(false);
+        this.queenOfSpadesTextField.setDisable(false);
+        this.queenOfSpadesTextField.setPrefWidth(35);
+        this.queenOfSpadesTextField.setMinWidth(35);
+        this.queenOfSpadesTextField.setAlignment(Pos.CENTER);
 
-        buttonBox.getChildren().addAll(edgeSpacer, flushLabel, flushText,
-                spacer, queenOfSpadesLabel, queenOfSpadesText);
+        buttonBox.getChildren().addAll(edgeSpacer, flushLabel, this.flushTextField,
+                spacer, queenOfSpadesLabel, this.queenOfSpadesTextField);
         return buttonBox;
     }
 }
