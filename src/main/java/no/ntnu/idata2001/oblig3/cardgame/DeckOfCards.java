@@ -8,6 +8,8 @@ import java.util.Random;
 /**
  * Class DeckOfCards represents a full deck of 52 cards
  * The class is responsible for managing the deck and returning sets of random cards
+ * @author Marko
+ * @version 2021-03-29
  */
 public class DeckOfCards
 {
@@ -40,7 +42,7 @@ public class DeckOfCards
      * @param card The card to add,
      *             can not be null or a duplicate
      */
-    public void addCard(PlayingCard card)
+    private void addCard(PlayingCard card)
     {
         if (card != null) {
             if (!this.deck.containsKey(card.getAsString())) {

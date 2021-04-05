@@ -17,7 +17,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
- * Class ToDoListAppGUI represents the main window of the application
+ * Class CardGameGUI represents the main window of the application
+ * @author Marko
+ * @version 2021-03-29
  */
 public class CardGameGUI extends Application
 {
@@ -44,7 +46,7 @@ public class CardGameGUI extends Application
      */
     public static void main(String[] args)
     {
-        launch();
+        Application.launch(args);
     }
 
     @Override
@@ -56,10 +58,10 @@ public class CardGameGUI extends Application
         root.setCenter(this.setupCenter());
 
         stage.setTitle("Card game frame");
-        stage.setMinWidth(400);
-        stage.setMinHeight(200);
+        stage.setMinWidth(740);
+        stage.setMinHeight(520);
 
-        Scene scene = new Scene(root, 600, 400, Color.WHITE);
+        Scene scene = new Scene(root, 720, 520, Color.WHITE);
         stage.setScene(scene);
         stage.show();
 
@@ -74,12 +76,12 @@ public class CardGameGUI extends Application
     {
         ScrollPane scrollPane = new ScrollPane();
 
-        this.tilePane.setPadding(new Insets(5, 5, 5, 5));
-        this.tilePane.setStyle("-fx-background-color:#e7e7e7; -fx-opacity:1;");
-        this.tilePane.setVgap(5);
-        this.tilePane.setHgap(5);
+        this.getTilePane().setPadding(new Insets(5, 5, 5, 5));
+        this.getTilePane().setStyle("-fx-background-color:#e7e7e7; -fx-opacity:1;");
+        this.getTilePane().setVgap(5);
+        this.getTilePane().setHgap(5);
 
-        scrollPane.setContent(this.tilePane);
+        scrollPane.setContent(this.getTilePane());
         scrollPane.setFitToWidth(true);
         scrollPane.setFitToHeight(true);
 
@@ -126,13 +128,12 @@ public class CardGameGUI extends Application
         spacer.setPrefHeight(15);
 
         Button checkHandButton = new Button("Check hand");
-        checkHandButton.setOnAction(e -> this.controller.checkHand(this.tilePane, this.sumOfFacesTextField,
-                this.cardOfHeartsTextField, this.queenOfSpadesTextField, this.flushTextField));
+        checkHandButton.setOnAction(e -> this.controller.checkHand(this.getTilePane(), this.getSumOfFacesTextField(),
+                this.getCardOfHeartsTextField(), this.getQueenOfSpadesTextField(), this.getFlushTextField()));
         checkHandButton.setPrefWidth(150);
         checkHandButton.setPrefHeight(30);
 
         vBox.getChildren().addAll(dealHandButton, spacer, checkHandButton);
-
         return vBox;
     }
 
@@ -143,7 +144,6 @@ public class CardGameGUI extends Application
     private HBox setupUpperButtonRow()
     {
         HBox buttonBox = new HBox();
-        //TODO: Use a GridPane here instead?
         buttonBox.setSpacing(5);
         buttonBox.setAlignment(Pos.CENTER_LEFT);
 
@@ -154,28 +154,23 @@ public class CardGameGUI extends Application
         Region edgeSpacer = new Region();
         edgeSpacer.setPrefWidth(1);
 
+        this.setupSmallTextField(this.getSumOfFacesTextField());
+
         Label sumLabel = new Label("Sum of the faces: ");
-
-        this.sumOfFacesTextField.setEditable(false);
-        this.sumOfFacesTextField.setDisable(false);
-        this.sumOfFacesTextField.setPrefWidth(35);
-        this.sumOfFacesTextField.setMinWidth(35);
-        this.sumOfFacesTextField.setAlignment(Pos.CENTER);
-
-
         Label heartsCardsLabel = new Label("Cards of hearts: ");
 
-        this.cardOfHeartsTextField.setEditable(false);
-        this.cardOfHeartsTextField.setDisable(false);
-        this.cardOfHeartsTextField.setAlignment(Pos.CENTER);
-        this.cardOfHeartsTextField.setMaxWidth(310);
+        this.getCardOfHeartsTextField().setEditable(false);
+        this.getCardOfHeartsTextField().setDisable(false);
+        this.getCardOfHeartsTextField().setAlignment(Pos.CENTER);
+        this.getCardOfHeartsTextField().setMaxWidth(310);
 
-        //this.cardOfHeartsTextField.setStyle("-fx-font-family: 'monospace';");
-        this.cardOfHeartsTextField.prefColumnCountProperty()
-                 .bind(this.cardOfHeartsTextField.textProperty().length());
+        //this.getCardOfHeartsTextField().setStyle("-fx-font-family: 'monospace';");
+        //JavaFX has issues with non-monospaced fonts, avoiding the issue with a max width for now
+        this.getCardOfHeartsTextField().prefColumnCountProperty()
+                 .bind(this.getCardOfHeartsTextField().textProperty().length());
 
-        buttonBox.getChildren().addAll(edgeSpacer, sumLabel, this.sumOfFacesTextField,
-                spacer, heartsCardsLabel, this.cardOfHeartsTextField);
+        buttonBox.getChildren().addAll(edgeSpacer, sumLabel, this.getSumOfFacesTextField(),
+                spacer, heartsCardsLabel, this.getCardOfHeartsTextField());
         return buttonBox;
     }
 
@@ -198,23 +193,76 @@ public class CardGameGUI extends Application
 
         Label flushLabel = new Label("Flush ");
 
-        this.flushTextField.setEditable(false);
-        this.flushTextField.setDisable(false);
-        this.flushTextField.setPrefWidth(35);
-        this.flushTextField.setMinWidth(35);
-        this.flushTextField.setAlignment(Pos.CENTER);
+        this.setupSmallTextField(this.getFlushTextField());
 
 
         Label queenOfSpadesLabel = new Label("Queen of spades: ");
 
-        this.queenOfSpadesTextField.setEditable(false);
-        this.queenOfSpadesTextField.setDisable(false);
-        this.queenOfSpadesTextField.setPrefWidth(35);
-        this.queenOfSpadesTextField.setMinWidth(35);
-        this.queenOfSpadesTextField.setAlignment(Pos.CENTER);
+        this.setupSmallTextField(this.getQueenOfSpadesTextField());
 
-        buttonBox.getChildren().addAll(edgeSpacer, flushLabel, this.flushTextField,
-                spacer, queenOfSpadesLabel, this.queenOfSpadesTextField);
+        buttonBox.getChildren().addAll(edgeSpacer, flushLabel, this.getFlushTextField(),
+                spacer, queenOfSpadesLabel, this.getQueenOfSpadesTextField());
         return buttonBox;
+    }
+
+    /**
+     * Sets the size, editability and alignment of the provided TextField
+     * @param textField The text field to set the parameters to,
+     *                  can not be null
+     */
+    private void setupSmallTextField(TextField textField)
+    {
+        if (textField != null) {
+            textField.setEditable(false);
+            textField.setDisable(false);
+            textField.setPrefWidth(35);
+            textField.setMinWidth(35);
+            textField.setAlignment(Pos.CENTER);
+        }
+    }
+
+    /**
+     * Returns the TilePane with cards
+     * @return The TilePane with cards
+     */
+    private TilePane getTilePane()
+    {
+        return this.tilePane;
+    }
+
+    /**
+     * Returns the sum of faces TextField
+     * @return The sum of faces TextField
+     */
+    private TextField getSumOfFacesTextField()
+    {
+        return this.sumOfFacesTextField;
+    }
+
+    /**
+     * Returns the cards of hearts TextField
+     * @return The cards of hearts TextField
+     */
+    private TextField getCardOfHeartsTextField()
+    {
+        return this.cardOfHeartsTextField;
+    }
+
+    /**
+     * Returns the Queen of spades TextField
+     * @return The Queen of spades TextField
+     */
+    private TextField getQueenOfSpadesTextField()
+    {
+        return this.queenOfSpadesTextField;
+    }
+
+    /**
+     * Returns the flush TextField
+     * @return The flush TextField
+     */
+    private TextField getFlushTextField()
+    {
+        return this.flushTextField;
     }
 }

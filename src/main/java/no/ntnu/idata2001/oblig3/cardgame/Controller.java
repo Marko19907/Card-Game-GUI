@@ -15,6 +15,8 @@ import java.util.List;
 /**
  * The main controller of the application
  * Responsible for handling all actions related to the buttons in the user interface
+ * @author Marko
+ * @version 2021-03-29
  */
 public class Controller
 {

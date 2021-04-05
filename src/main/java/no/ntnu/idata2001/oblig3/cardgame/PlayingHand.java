@@ -1,21 +1,28 @@
 package no.ntnu.idata2001.oblig3.cardgame;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Class PlayingHand represents a hand with cards
+ * It is responsible for keeping track of active and used cards, as well as,
+ * checking for specific card combinations, like flush and
+ * the presence of the queen of spades card
+ * @author Marko
+ * @version 2021-03-29
+ */
 public class PlayingHand
 {
-    private final HashMap<String, PlayingCard> playingCards;
+    private final ArrayList<PlayingCard> activeCards;
     private final HashMap<String, PlayingCard> usedCards;
     private final DeckOfCards deck;
 
     public PlayingHand()
     {
-        this.playingCards = new HashMap<>();
+        this.activeCards = new ArrayList<>();
         this.usedCards = new HashMap<>();
 
         this.deck = new DeckOfCards();
@@ -38,31 +45,27 @@ public class PlayingHand
     /**
      * Adds a given card to the deck
      * @param card The card to add,
-     *             can not be null or a duplicate
+     *             can not be null
      */
     public void addActiveCard(PlayingCard card)
     {
         if (card != null) {
-            if (!this.playingCards.containsKey(card.getAsString())) {
-                this.playingCards.put(card.getAsString(), card);
-            }
+            this.activeCards.add(card);
         }
     }
 
     /**
      * Returns a List of active cards from the hand
+     * The cards returned are then moved to the used cards List
      * @return a List of active cards from the hand
      */
     public List<PlayingCard> getActiveCards()
     {
-        List<PlayingCard> activeCards = new ArrayList<>(this.playingCards.values());
-        // The list is made with values from a HashMap and therefore is not in a random order
-        //TODO: Move the player hand class to ArrayList(s)
-        Collections.shuffle(activeCards);
+        List<PlayingCard> activeCardsList = new ArrayList<>(this.activeCards);
 
         this.cleanActiveCards();
 
-        return activeCards;
+        return activeCardsList;
     }
 
     /**
@@ -120,12 +123,13 @@ public class PlayingHand
      */
     private void cleanActiveCards()
     {
-        for (PlayingCard card : this.playingCards.values()) {
+        for (PlayingCard card : this.activeCards) {
             if (!this.usedCards.containsKey(card.getAsString())) {
                 this.usedCards.put(card.getAsString(), card);
             }
         }
-        this.playingCards.clear();
+
+        this.activeCards.clear();
     }
 
     /**
