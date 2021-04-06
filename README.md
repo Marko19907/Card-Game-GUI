@@ -1,10 +1,5 @@
-#Oblig 3 - Card Game
-Bruk dette prosjektet som utgangspunkt for Oblig 3 i IDATA2001.
+## Card Game
+Card game assignment, an obligatory task in the subject "Programing 2" at NTNU.
+This task does not count towards the final grade in the subject.
 
-I Oppgave 1, der du får oppgitt koden til klassen PlayingCard, gjør som følger:
-1. Klon dette repositoriet i GitHub til mappen på din harddisk der du ønsker å jobbe videre med denne oppgaven.
-1. Følg deretter oppgaveteksten steg for steg.
-
-Husk å push til GitHub ved jevne mellomrom.
-
-LYKKE TIL!
+The project uses JavaFX for the GUI and makes extensive use of functional programming, such as lambda expressions and streams, to filter the list of active cards for the GUI.
