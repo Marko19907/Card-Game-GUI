@@ -59,8 +59,9 @@ public class Controller
     public void checkHand(TilePane tilePane, TextField sumOfTheFacesTextField, TextField cardOfHeartsTextField,
                           TextField queenOfSpadesTextField, TextField flushTextField)
     {
-        this.setCardImagesToTilePane(tilePane);
+        List<PlayingCard> activeCards = this.hand.getActiveCards();
 
+        this.setCardImagesToTilePane(tilePane, activeCards);
         this.checkSumOfFaces(sumOfTheFacesTextField);
         this.checkCardsOfHearts(cardOfHeartsTextField);
         this.checkQueenOfSpadesPresence(queenOfSpadesTextField);
@@ -68,19 +69,20 @@ public class Controller
     }
 
     /**
-     * Sets the card images to the provided TilePane
+     * Sets the card images from the provided List of cards to the provided TilePane
      * @param tilePane The TilePane to set the images to, can not be null
+     * @param activeCards The List of cards to show, can not be null or empty
      */
-    private void setCardImagesToTilePane(TilePane tilePane)
+    private void setCardImagesToTilePane(TilePane tilePane, List<PlayingCard> activeCards)
     {
-        if (tilePane != null) {
-            List<PlayingCard> activeCards = this.hand.getActiveCards();
+        if (tilePane != null && activeCards != null) {
+            if (!activeCards.isEmpty()) {
+                for (PlayingCard card : activeCards) {
+                    ImageView imageView = this.imageLoader.getCardImage(card.getAsString());
 
-            for (PlayingCard card : activeCards) {
-                ImageView imageView = this.imageLoader.getCardImage(card.getAsString());
-
-                if (imageView != null) {
-                    tilePane.getChildren().add(imageView);
+                    if (imageView != null) {
+                        tilePane.getChildren().add(imageView);
+                    }
                 }
             }
         }
