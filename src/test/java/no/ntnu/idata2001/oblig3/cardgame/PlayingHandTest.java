@@ -1,5 +1,8 @@
 package no.ntnu.idata2001.oblig3.cardgame;
 
+import no.ntnu.idata2001.oblig3.cardgame.model.PlayingCard;
+import no.ntnu.idata2001.oblig3.cardgame.model.PlayingHand;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

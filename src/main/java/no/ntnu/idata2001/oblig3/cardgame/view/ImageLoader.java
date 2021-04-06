@@ -1,4 +1,4 @@
-package no.ntnu.idata2001.oblig3.cardgame;
+package no.ntnu.idata2001.oblig3.cardgame.view;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

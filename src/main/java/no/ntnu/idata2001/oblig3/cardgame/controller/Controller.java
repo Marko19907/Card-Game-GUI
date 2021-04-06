@@ -1,4 +1,4 @@
-package no.ntnu.idata2001.oblig3.cardgame;
+package no.ntnu.idata2001.oblig3.cardgame.controller;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
@@ -9,6 +9,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
+
+import no.ntnu.idata2001.oblig3.cardgame.model.PlayingCard;
+import no.ntnu.idata2001.oblig3.cardgame.model.PlayingHand;
+import no.ntnu.idata2001.oblig3.cardgame.view.ImageLoader;
 
 import java.util.List;
 

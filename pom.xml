@@ -22,7 +22,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.3</version>
                 <configuration>
-                    <mainClass>no.ntnu.idata2001.oblig3.cardgame.CardGameGUI</mainClass>
+                    <mainClass>no.ntnu.idata2001.oblig3.cardgame.view.CardGameGUI</mainClass>
                 </configuration>
             </plugin>
 

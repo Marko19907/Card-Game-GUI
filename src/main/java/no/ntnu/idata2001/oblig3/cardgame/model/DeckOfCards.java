@@ -1,4 +1,4 @@
-package no.ntnu.idata2001.oblig3.cardgame;
+package no.ntnu.idata2001.oblig3.cardgame.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package no.ntnu.idata2001.oblig3.cardgame;
+package no.ntnu.idata2001.oblig3.cardgame.view;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -15,6 +15,8 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import no.ntnu.idata2001.oblig3.cardgame.controller.Controller;
 
 /**
  * Class CardGameGUI represents the main window of the application
