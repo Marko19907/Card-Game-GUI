@@ -20,8 +20,15 @@
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.3</version>
+                <version>0.0.6</version>
                 <configuration>
+                    <stripDebug>true</stripDebug>
+                    <compress>2</compress>
+                    <noHeaderFiles>true</noHeaderFiles>
+                    <noManPages>true</noManPages>
+                    <launcher>Card Game GUI - launcher</launcher>
+                    <jlinkImageName>Card Game GUI</jlinkImageName>
+                    <jlinkZipName>Card Game GUI - zip</jlinkZipName>
                     <mainClass>no.ntnu.idata2001.oblig3.cardgame.view.CardGameGUI</mainClass>
                 </configuration>
             </plugin>
@@ -56,7 +63,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.7.0</version>
+            <version>5.7.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
