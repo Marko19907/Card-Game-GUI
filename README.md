@@ -4,9 +4,9 @@ This task does not count towards the final grade in the subject.
 
 The project uses JavaFX for the GUI and makes extensive use of functional programming, such as lambda expressions and streams, to filter the list of active cards for the GUI.
 
+![build status](https://github.com/Marko19907/Card-Game-GUI/actions/workflows/maven.yml/badge.svg)
 
-## Acknowledgements
-
+## Disclaimers
 **Vectorized Playing Cards 3.2**  
 https://totalnonsense.com/open-source-vector-playing-cards/  
 Copyright 2011, 2020 – Chris Aguilar – conjurenation@gmail.com  
